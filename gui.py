@@ -1,6 +1,5 @@
 import tkinter as tk
-
-import tkinter as tk
+from logic import *
 
 def and_gate(canvas, x, y, width=40, height=40): # width and height must be the same
     canvas.create_line(x - width / 2, y - height / 2, x - width / 2, y + height / 2, width=2)
@@ -23,9 +22,6 @@ def vert_jump(canvas, x, y, width=5, height=5):
 
 def line(canvas, x1, y1, x2, y2):
     canvas.create_line(x1, y1, x2, y2, width=2)
-
-inputs = 4
-values = [[[3], [0]], [[2, 3], [1]], [[2], [0, 1]], [[1], [0, 2]]]
 
 def draw(values):
     n = len(values)
@@ -82,39 +78,16 @@ def draw(values):
             if x in values[i][0]:
                 not_gate(canvas, 250 - 22, and_pos[i] + in_offset[x])
 
-
-
-
-
-
-
-    
-    # # horizontal lines out of start
-    # barriers = []
-    # for i in range(inputs):
-    #     canvas.create_text(25/2, in_y[i], text=str(2**i), font=('bold', 10))
-    #     line(canvas, 25, in_y[i], in_x[i], in_y[i])
-    #     barriers.append([in_y[i], 25, in_x[i]])
-    
-    # # horizontal lines to ands
-    # for i in range(n):
-    #     for x in values[i][0]:
-    #         line(canvas, in_x[x], and_pos[i] + in_offset[x], 250 - 24, and_pos[i] + in_offset[x])
-    #         barriers.append([and_pos[i] + in_offset[x], in_x[i], 250 - 24])
-    #         not_gate(canvas, 250 - 22, and_pos[i] + in_offset[x])
-    #     for x in values[i][1]:
-    #         line(canvas, in_x[x], and_pos[i] + in_offset[x], 250 - 20, and_pos[i] + in_offset[x])
-    #         barriers.append([and_pos[i] + in_offset[x], in_x[i], 250 - 20])
-
-
-    
-    # in_max = [in_y[i] for i in range(inputs)]
-    # for i in range(n-1, -1, -1):
-    #     for x in values[i][0] + values[i][1]:
-    #         in_max[x] = max(in_max[x], and_pos[i] + offset)
-            
-            
-
     root.mainloop()
+
+
+
+# valid = ["0001", "0010", "0011", "0101", "0111", "1011", "1101"] # 4 primes
+# valid = ["0000", "0011", "1000", "1111"] # squares
+# valid = ["00001", "00010", "00011", "00101", "00111", "01011", "01101", "10001", "10011", "10111", "11101", "11111"] # 5 primes
+valid = ["000001", "000010", "000011", "000101", "000111", "001011", "001101", "010001", "010011", "010111", "011101", "011111", "100101", "101001", "101011", "101111", "110101", "111011", "111101"] # 6 primes
+print(len(valid))
+inputs, init_values = convert(valid)
+values = find_circuit(inputs, init_values)
 
 draw(values)

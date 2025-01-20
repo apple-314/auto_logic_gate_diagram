@@ -47,21 +47,41 @@ def diff_1(a, b, s1, s2):
         
 
 # valid = ["0001", "0010", "0011", "0101", "0111", "1011", "1101"]
+valid = ["0000", "0011", "1000", "1111"]
+def convert(vals):
+    n = len(vals[0])
+    ret = []
+    for x in vals:
+        ones = []
+        zeros = []
+        for i in range(n-1, -1, -1):
+            if x[i] == '0':
+                zeros.append(n-i-1)
+            else:
+                ones.append(n-i-1)
+        
+        ret.append([zeros, ones])
 
+    return n, ret
 
 # values[i] = [[zero pos], [one pos]]
-values = [[[1,2,3], [0]], 
-          [[0,2,3], [1]], 
-          [[2,3], [0,1]],
-          [[1,3], [0,2]],
-          [[3], [0,1,2]],
-          [[2], [0,1,3]],
-          [[1], [0,2,3]]
-]
+# n = 4
+# values = [[[1,2,3], [0]], 
+#           [[0,2,3], [1]], 
+#           [[2,3], [0,1]],
+#           [[1,3], [0,2]],
+#           [[3], [0,1,2]],
+#           [[2], [0,1,3]],
+#           [[1], [0,2,3]]
+# ]
+
+n, values = convert(valid)
+# print(n)
+# print(values)
 
 start = time.time()
 
-def find_circuit(values):
+def find_circuit(n, values):
     found = True
 
     while (found):
@@ -116,9 +136,11 @@ def find_circuit(values):
         for i in range(n - 1, -1, -1):
             if values.index(values[i]) != i:
                 del values[i]
-                
-    # check for possible deletions
+
+
+    # can delete extraneous terms be generating all possibilities and getting counts
+
     return values
 
-print(find_circuit(values))
-print(time.time() - start)
+# print(find_circuit(n, values))
+# print(time.time() - start)
